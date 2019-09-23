@@ -1,0 +1,169 @@
+<h4>Formularios
+  <small>data</small>
+</h4>
+<hr>
+
+
+<!--
+[formGroup]="forma"  // le especifico que el formulario usara el objeto forma
+(ngSubmit)="funcionEjecutar()"
+ novalidate="novalidate"  // para que la validacion de html no se ejecute ya que se hara con javascript
+-->
+<form [formGroup]="forma" (ngSubmit)="guardarCambios()" novalidate="novalidate">
+
+  <div>
+
+    <div class="form-group row" [ngClass]="{'has-danger': !forma.controls['nombre'].valid}">
+      <label class="col-2 col-form-label">Nombre</label>
+      <div class="col-8">
+        <!--
+        formControlName="nombre"  // directiva para asignar la variable de formularioControl
+        -->
+
+        <input class="form-control"
+               type="text"
+               placeholder="Nombre"
+               formControlName="nombre">
+
+        <!--
+        *ngIf="!forma.controls['nombre'].valid"  // accedemos a la propieda errors, del arreglo apuntando por el nombre
+        del elemento,
+        -->
+        <div class="form-control-feedback" *ngIf="forma.controls['nombre'].errors?.required">
+          El nombre es necesario
+        </div>
+        <div class="form-control-feedback" *ngIf="forma.controls['nombre'].errors?.minlength">
+          El nombre debe contener mas de 5 caracteres
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Apellido</label>
+      <div class="col-8">
+        <input class="form-control"
+               type="text"
+               placeholder="Apellido"
+               formControlName="apellido">
+
+        <!--
+        *ngIf="forma.get('apellido').errors?.required"  // otra forma usando el .get('nombreVariable') sin acceder al controls
+        -->
+        <div class="form-control-feedback" *ngIf="forma.get('apellido').errors?.required">
+          El Apellido es necesario
+        </div>
+        <div class="form-control-feedback" *ngIf="forma.get('apellido').errors?.noApellidoMarquez">
+          El Apellido marquez NO es valido, intenta con otro
+        </div>
+
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Correo</label>
+    <div class="col-md-8">
+
+      <input class="form-control"
+             type="email"
+             placeholder="Correo electrónico"
+             formControlName="correo">
+    </div>
+  </div>
+
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Password 1</label>
+    <div class="col-md-8">
+
+      <input class="form-control"
+             type="password"
+             placeholder="Contraseña 1"
+             formControlName="password1">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Password 2</label>
+    <div class="col-md-8">
+
+      <input class="form-control"
+             type="email"
+             placeholder="Password 2"
+             formControlName="password2">
+
+      <div class="form-control-feedback" *ngIf="forma.get('password2').errors?.passwordNoIgual">
+        El password 2 es diferente al password 1
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Username - Asincrono</label>
+    <div class="col-md-8">
+
+      <input class="form-control"
+             type="text"
+             placeholder="Username"
+             formControlName="username">
+
+
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Pasatiempos</label>
+    <div class="col-md-8" formArrayName="pasatiempos">
+
+      <!--
+      forma.controls['pasatiempos'].controls  // accedemos al elemento Array a traves de toda la ruta del formulario
+      le pasamos el indice al [formControlName], para que sepa a que name de cada elemento hace referencia
+      -->
+
+
+      <input type="text"
+             class="form-control"
+             [formControlName]="i"
+             *ngFor="let pasatiempo of forma.controls['pasatiempos'].controls;let i = index">
+
+    </div>
+    <button class="btn btn-primary" (click)="agregarPasatiempos()">Nuevo elemento</button>
+  </div>
+
+
+  <div class="form-group row">
+    <div class="input-group col-md-8">
+      <button type="submit" class="btn btn-outline-primary">
+        Guardar
+      </button>
+
+      &nbsp; | &nbsp;
+      <button type="button" (click)="resetearFormulario()" class="btn btn-outline-primary">
+        Restear Formulario
+      </button>
+    </div>
+
+  </div>
+
+  <hr>
+  <p>forma.status = {{forma.status}}</p>
+  <hr>
+  <ul>
+    <li>forma.valid = {{forma.valid}}</li>
+    <li>forma.controls['nombre'].valid = {{forma.controls['nombre'].valid}}</li>
+    <li>forma.controls['apellido'].valid = {{forma.controls['apellido'].valid}}</li>
+    <li>forma.controls['correo'].valid = {{forma.controls['correo'].valid}}</li>
+    <li>forma.controls['password1'].valid = {{forma.controls['password1'].valid}}</li>
+    <li>forma.controls['password2'].valid = {{forma.controls['password2'].valid}}</li>
+    <li>forma.controls['username'].valid = {{forma.controls['username'].valid}}</li>
+    <li>forma.controls['pasatiempos'].valid = {{forma.controls['pasatiempos'].valid}}</li>
+  </ul>
+
+  <hr>
+      <pre>
+        forma.value = {{forma.value | json}}
+      </pre>
+</form>

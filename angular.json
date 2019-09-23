@@ -22,10 +22,18 @@
               "src/favicon.ico",
               "src/assets"
             ],
+            /*Importando los estilos*/
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/assets/booststrap4/css/bootstrap.min.css",
+              "src/assets/font-awesome/css/font-awesome.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/jquery/jquery.js",
+              "src/assets/tether/tether.js",
+              "src/assets/booststrap4/js/bootstrap.min.js"
+
+            ]
           },
           "configurations": {
             "production": {
@@ -71,18 +79,10 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
-            /*Importando los estilos*/
             "styles": [
-              "src/styles.css",
-              "src/assets/booststrap4/css/bootstrap.min.css",
-              "src/assets/font-awesome/css/font-awesome.min.css"
+              "src/styles.css"
             ],
-            "scripts": [
-              "src/assets/jquery/jquery.js",
-              "src/assets/tether/tether.js",
-              "src/assets/booststrap4/js/bootstrap.min.js"
-
-            ],
+            "scripts": [],
             "assets": [
               "src/favicon.ico",
               "src/assets"
